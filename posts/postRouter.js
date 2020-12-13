@@ -40,7 +40,7 @@ router.put('/postsID', (req, res) => {
       message: "Please enter the post to update"
     })
   } else {
-    posts.update(req.params.id, {text: req.body.text})
+    postsDb.update(req.params.id, {text: req.body.text})
     .then(() => {
       res.status(200).json("The post has been updated")
     })
