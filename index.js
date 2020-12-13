@@ -10,7 +10,7 @@ server.use(express.json())
 server.use(cors())
 
 server.use("/users", userRouter)
-server.use("/users/:id/posts", postRouter)
+server.use("/users/:usersID/posts", postRouter)
 
 server.use((err, req, res, next) => {
     console.log(err)

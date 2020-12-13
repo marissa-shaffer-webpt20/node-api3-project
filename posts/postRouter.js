@@ -18,11 +18,11 @@ router.get('/', (req, res) => {
   })
 });
 
-router.get('/postsID', validatePostId(), (req, res) => {
+router.get('/:postsID', validatePostId(), (req, res) => {
   res.status(200).json(req.newPost)
 });
 
-router.delete('/postsID', (req, res) => {
+router.delete('/:postsID', (req, res) => {
   postsDb.remove(req.params.id)
   .then(() => {
     res.status(200).json("The post has been deleted")
@@ -34,7 +34,7 @@ router.delete('/postsID', (req, res) => {
   })
 });
 
-router.put('/postsID', (req, res) => {
+router.put('/:postsID', (req, res) => {
   if(!req.body.text){
     res.status(404).json({
       message: "Please enter the post to update"
