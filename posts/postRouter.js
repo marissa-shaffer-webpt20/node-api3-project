@@ -18,25 +18,49 @@ router.get('/', (req, res) => {
   })
 });
 
-router.get('/:id', (req, res) => {
-  // do your magic!
+router.get('/postsID', validatePostId(), (req, res) => {
+  res.status(200).json(req.newPost)
 });
 
-router.delete('/:id', (req, res) => {
-  // do your magic!
+router.delete('/postsID', (req, res) => {
+  postsDb.remove(req.params.id)
+  .then(() => {
+    res.status(200).json("The post has been deleted")
+  })
+  .catch(err => {
+    res.status(500).json({
+      message: "Couldnt delete the post"
+    })
+  })
 });
 
-router.put('/:id', (req, res) => {
-  // do your magic!
+router.put('/postsID', (req, res) => {
+  if(!req.body.text){
+    res.status(404).json({
+      message: "Please enter the post to update"
+    })
+  } else {
+    posts.update(req.params.id, {text: req.body.text})
+    .then(() => {
+      res.status(200).json("The post has been updated")
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({
+        message: "Couldn't update the post, please try later"
+      })
+    })
+  }
 });
 
 // custom middleware
 
-function validatePostId(req, res, next) {
-  posts.getById(req.params.id)
+function validatePostId() {
+  return (req, res, next) => {
+  postsDb.getById(req.params.id)
     .then((post) => {
       if(post) {
-        req.post = post
+        req.newPost = post
         next()
       } else {
         res.status(404).json({
@@ -44,9 +68,8 @@ function validatePostId(req, res, next) {
         })
       }
     })
-    .catch((error) => {
-        next(error)
-    })
+    .catch(next)
+}
 }
 
 module.exports = router;
