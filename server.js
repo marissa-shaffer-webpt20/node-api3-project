@@ -13,12 +13,12 @@ server.use("/users", userRouter)
 server.use("/users/:usersID/posts", postRouter)
 server.use(logger("long"))
 
-server.use((err, req, res, next) => {
-  console.log(err)
-  res.status(500).json({
-      message: "Error"
-  })
-})
+// server.use((err, req, res, next) => {
+//   console.log(err)
+//   res.status(500).json({
+//       message: "Error"
+//   })
+// })
 
 server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);
