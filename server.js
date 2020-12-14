@@ -9,8 +9,8 @@ const server = express()
 server.use(express.json())
 server.use(cors())
 
-server.use("/users", userRouter)
-server.use("/users/:usersID/posts", postRouter)
+server.use("/api/users", userRouter)
+server.use("/api/posts", postRouter)
 server.use(logger("long"))
 
 server.use((err, req, res, next) => {
