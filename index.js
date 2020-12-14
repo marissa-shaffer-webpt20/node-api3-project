@@ -11,6 +11,7 @@ server.use(cors())
 
 server.use("/users", userRouter)
 server.use("/users/:usersID/posts", postRouter)
+server.use(logger("long"))
 
 server.use((err, req, res, next) => {
     console.log(err)
